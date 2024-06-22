@@ -1,4 +1,4 @@
-export const Balance = (amt: number = 0) => {
+export const Balance = (amt: number) => {
   const res = amt / 100;
   return res.toFixed(2);
 };
