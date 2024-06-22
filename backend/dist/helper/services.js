@@ -19,7 +19,7 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const cookieSetter = (res, token, set) => {
     res.setHeader("Set-Cookie", (0, cookie_1.serialize)("token", set ? token : "", {
         path: "/",
-        httpOnly: false,
+        httpOnly: true,
         maxAge: set ? 30 * 24 * 60 * 60 * 1000 : 0,
     }));
 };

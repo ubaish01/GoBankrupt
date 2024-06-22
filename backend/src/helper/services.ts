@@ -8,7 +8,7 @@ export const cookieSetter = (res: Response, token: string, set: boolean) => {
     "Set-Cookie",
     serialize("token", set ? token : "", {
       path: "/",
-      httpOnly: false,
+      httpOnly: true,
       maxAge: set ? 30 * 24 * 60 * 60 * 1000 : 0,
     })
   );
