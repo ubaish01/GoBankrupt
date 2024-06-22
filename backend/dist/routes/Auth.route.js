@@ -28,4 +28,3 @@ router.get("/google/callback", passport_1.default.authenticate("google", {
 //@ts-ignore
 router.get("/user", Auth_controller_1.AuthContollers.getUser);
 exports.default = router;
-//# sourceMappingURL=Auth.route.js.map

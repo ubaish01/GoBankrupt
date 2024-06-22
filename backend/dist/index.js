@@ -48,4 +48,3 @@ app.post("/game", (req, res) => {
         // pattern
     });
 });
-//# sourceMappingURL=index.js.map

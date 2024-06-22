@@ -37,8 +37,7 @@ app.use("/api/v1/game", Game_route_1.default);
 app.get("/", (req, res) => {
     return res.json({
         success: true,
-        message: `express server is running on ${process.env.PORT}`,
+        message: "server is running",
     });
 });
 exports.default = app;
-//# sourceMappingURL=app.js.map

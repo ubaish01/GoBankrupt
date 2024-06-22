@@ -83,4 +83,3 @@ const ExtractUser = (req) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.ExtractUser = ExtractUser;
-//# sourceMappingURL=auth.middlewate.js.map

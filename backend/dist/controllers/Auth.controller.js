@@ -288,9 +288,10 @@ exports.AuthContollers = {
         }
     }),
     userOnboard: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        var _f;
         try {
             const user = yield User.findById(req.user._id);
-            const avatar = parseInt(req.body.avatar);
+            const avatar = parseInt((_f = req.body) === null || _f === void 0 ? void 0 : _f.avatar);
             if (!avatar)
                 return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, "Selecting avatar is mandatory");
             user.avatar = avatar;
@@ -302,7 +303,7 @@ exports.AuthContollers = {
                 balance,
             });
             yield user.save();
-            const _f = user._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _f, rest = __rest(_f, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
+            const _g = user._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _g, rest = __rest(_g, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
             return res.json({ success: true, user: Object.assign({}, rest), wallet });
         }
         catch (error) {
@@ -310,4 +311,3 @@ exports.AuthContollers = {
         }
     }),
 };
-//# sourceMappingURL=Auth.controller.js.map

@@ -7,9 +7,12 @@ const RedirectionCheck = () => {
   const location = useLocation();
   const { user, login } = useSelector((state: any) => state.ROOT);
   useEffect(() => {
-    if ((!login || user.onboard) && location.pathname.includes("/user/onboard"))
+    if (
+      (!login || user?.onboard) &&
+      location.pathname.includes("/user/onboard")
+    )
       navigate("/auth");
-    if (login && !user.onboard) navigate("/user/onboard");
+    if (login && !user?.onboard) navigate("/user/onboard");
   }, [location.pathname, user]);
 
   return <></>;

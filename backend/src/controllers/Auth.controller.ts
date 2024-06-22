@@ -358,7 +358,7 @@ export const AuthContollers = {
   userOnboard: async (req: ModifiedRequest, res: Response) => {
     try {
       const user = await User.findById(req.user._id);
-      const avatar = parseInt(req.body.avatar);
+      const avatar = parseInt(req.body?.avatar);
       if (!avatar)
         return errorHandler(
           res,

@@ -20,4 +20,3 @@ const ConnectDatabase = () => {
     }
 };
 exports.ConnectDatabase = ConnectDatabase;
-//# sourceMappingURL=db.js.map

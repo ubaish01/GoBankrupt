@@ -68,4 +68,3 @@ exports.BET_RISK = {
     MEDIUM: 2,
     HIGH: 3,
 };
-//# sourceMappingURL=contants.js.map

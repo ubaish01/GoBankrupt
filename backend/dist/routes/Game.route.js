@@ -10,4 +10,3 @@ const auth_middlewate_1 = require("../middlewares/auth.middlewate");
 //@ts-ignore
 router.post("/plinkoo", auth_middlewate_1.isAuthenticated, Game_controller_1.Plinkoo);
 exports.default = router;
-//# sourceMappingURL=Game.route.js.map

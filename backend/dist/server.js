@@ -9,4 +9,3 @@ const port = process.env.PORT || 5000;
 app_1.default.listen(port, () => {
     console.log(`Express is listening at http://localhost:${port}`);
 });
-//# sourceMappingURL=server.js.map
