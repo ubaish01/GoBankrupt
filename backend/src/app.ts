@@ -40,7 +40,7 @@ app.use("/api/v1/game", gameRouter);
 app.get("/", (req, res: Response) => {
   return res.json({
     success: true,
-    message: "server is running",
+    message: `express server is running on ${process.env.PORT}`,
   });
 });
 

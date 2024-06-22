@@ -76,7 +76,7 @@ const Header = () => {
         </div>
         <div className="items-center  flex rounded-md overflow-hidden">
           <div className="bg-black w-40 px-8 py-3">
-            $ {Balance(wallet.balance)}
+            $ {Balance(wallet?.balance)}
           </div>
           <div className="bg-purple-700 w-24 text-center font-bold px-4 py-3 cursor-pointer">
             Wallet
