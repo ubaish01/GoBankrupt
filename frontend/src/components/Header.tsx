@@ -92,7 +92,7 @@ const Header = () => {
             onClickCapture={() => {
               setOptionsOpen((prev) => !prev);
             }}
-            src={AVATAR[user.avatar]}
+            src={AVATAR[user?.avatar || 1]}
             className="w-10 aspect-square cursor-pointer active:scale-95 rounded-full object-cover"
           />
           <div
