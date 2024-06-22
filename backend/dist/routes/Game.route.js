@@ -1,0 +1,13 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
+const Game_controller_1 = require("../controllers/Game.controller");
+const auth_middlewate_1 = require("../middlewares/auth.middlewate");
+//@ts-ignore
+router.post("/plinkoo", auth_middlewate_1.isAuthenticated, Game_controller_1.Plinkoo);
+exports.default = router;
+//# sourceMappingURL=Game.route.js.map
