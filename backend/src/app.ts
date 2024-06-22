@@ -1,6 +1,6 @@
 import { ConnectDatabase } from "./connection/db";
 import { LOCALHOST } from "./config/contants";
-import express from "express";
+import express, { Response } from "express";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -37,5 +37,11 @@ app.use(
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/game", gameRouter);
+app.get("/", (req, res: Response) => {
+  return res.json({
+    success: true,
+    message: "server is running",
+  });
+});
 
 export default app;
