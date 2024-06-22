@@ -77,13 +77,10 @@ export function Plinkoo() {
         <Button
           className="px-10 mb-4 bg-purple-500 active:scale-95 flex items-center gap-2"
           onClick={async () => {
-            const response = await postRequest(
-              `${baseURL}/api/v1/game/plinkoo`,
-              {
-                bet: betAmount * 100,
-                risk: risk.value,
-              }
-            );
+            const response = await postRequest(`/game/plinkoo`, {
+              bet: betAmount * 100,
+              risk: risk.value,
+            });
             if (ballManager) {
               ballManager.addBall(response.data.point, () => {
                 const amount = Number(
