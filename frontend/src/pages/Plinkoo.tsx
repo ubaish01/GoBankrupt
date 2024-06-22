@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { BallManager } from "../game/classes/BallManager";
 import { Button } from "../components/ui";
-import { baseURL } from "../utils";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { wallet as setWallet } from "../redux/user/userSlice";
