@@ -89,8 +89,12 @@ export function Plinkoo() {
                 const amount = Number(
                   (response.data.multiplier * betAmount - betAmount).toFixed(1)
                 );
-                if (amount >= 0) toast.success(`+${amount}$`);
-                else toast.error(`- ${Math.abs(amount)}$`);
+                if (amount >= 0)
+                  toast.success(`+${amount}$`, { position: "bottom-left" });
+                else
+                  toast.error(`- ${Math.abs(amount)}$`, {
+                    position: "bottom-left",
+                  });
                 dispatch(setWallet(response.data.wallet));
               });
             }

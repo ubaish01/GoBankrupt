@@ -36,6 +36,8 @@ export const useAuth = (setState: any) => {
         setState(AUTH_STATE.EMAIL_VERIFICATION);
         dispatch(timerActive(true));
         toast.success(res?.data?.message);
+      } else {
+        toast.error(res?.data?.message);
       }
     } catch (error: any) {
       toast.error(error?.message);
@@ -56,6 +58,8 @@ export const useAuth = (setState: any) => {
         dispatch(setLogin(true));
         navigate("/user/onboard");
         toast.success(res?.data?.message);
+      } else {
+        toast.error(res?.data?.message);
       }
     } catch (error: any) {
       toast.error(error?.message);
@@ -72,8 +76,10 @@ export const useAuth = (setState: any) => {
       if (res?.data?.success) {
         dispatch(setUser(res?.data?.user));
         dispatch(setLogin(true));
-        dispatch(wallet(res.data.wallet.toFixed(2)));
+        dispatch(wallet(res.data.wallet));
         toast.success(res?.data?.message);
+      } else {
+        toast.error(res?.data?.message);
       }
     } catch (error: any) {
       setLoading(false);

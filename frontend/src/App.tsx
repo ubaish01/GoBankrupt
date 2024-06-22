@@ -33,7 +33,7 @@ function App() {
         <Route path="/user/onboard" element={<Onboarding />} />
       </Routes>
       <Footer />
-      <Toaster position="bottom-left" />
+      <Toaster position="top-center" />
     </BrowserRouter>
   );
 }

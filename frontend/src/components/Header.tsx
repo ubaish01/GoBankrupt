@@ -3,7 +3,7 @@ import logo from "../assets/Logos/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AVATAR } from "../game/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRequest } from "../services/Request";
 import { AUTH } from "../services/URL";
 import {
@@ -21,6 +21,18 @@ const Header = () => {
   const dispatch = useDispatch();
   const { login, user, wallet } = useSelector((state: any) => state.ROOT);
   const [optionsOpen, setOptionsOpen] = useState(false);
+  const optionRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: any) => {
+      if (optionRef && !optionRef?.current?.contains(e.target))
+        setOptionsOpen(false);
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   const getUser = async () => {
     if (login) return;
@@ -89,6 +101,7 @@ const Header = () => {
           </div>
           <IoIosNotifications size={24} className="cursor-pointer" />
           <img
+            ref={optionRef}
             onClickCapture={() => {
               setOptionsOpen((prev) => !prev);
             }}
