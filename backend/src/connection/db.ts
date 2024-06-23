@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import "../models/Transaction.model";
 import "../models/User.model";
 import "../models/Wallet.model";
+import "../models/MineGame.model";
 
 export const ConnectDatabase = () => {
   if (mongoose.connection.readyState === 0) {

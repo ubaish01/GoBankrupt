@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { MONTHS } from "../config/contants";
 import Express from "express";
+import { MINES_CONSTANTS } from "../config/GameConstants";
 
 export const extractJwt = (cookie: string) => {
   let token: any = cookie?.split("token=");
@@ -48,6 +49,64 @@ export const isTokenValid = (req: Express.Request) => {
   if (!decoded) return null;
 
   return decoded?._id;
+};
+
+export const generateRandomNumber = (min: number = 0, max: number = 10) => {
+  const number = Math.floor(Math.random() * (max - min + 1));
+  return number + min;
+};
+
+interface boxType {
+  row: number;
+  col: number;
+}
+
+type Row = number[];
+
+export const CreateMineGamePrivateState = (mines: number) => {
+  const rows = 5,
+    cols = 5;
+  const state: Row[] = [];
+
+  const mineIndex: { row: number; col: number }[] = [];
+  while (mineIndex.length < mines) {
+    const row = generateRandomNumber(0, 5);
+    const col = generateRandomNumber(0, 5);
+    const includes = mineIndex.filter(
+      (box) => box.row === row && box.col === col
+    )?.length;
+    if (!includes) mineIndex.push({ row, col });
+  }
+
+  for (let i = 0; i < rows; i++) {
+    const currRow: Row = [];
+    for (let j = 0; j < cols; j++) {
+      const includes = mineIndex.filter(
+        (box) => box.row === i && box.col === j
+      )?.length;
+
+      if (includes) currRow.push(MINES_CONSTANTS.BOX_STATE.MINE);
+      else currRow.push(MINES_CONSTANTS.BOX_STATE.GEM);
+    }
+    state.push(currRow);
+  }
+
+  return state;
+};
+
+export const CreateMineGamePublicState = () => {
+  const rows = 5;
+  const cols = 5;
+
+  const state: Row[] = [];
+
+  for (let i = 0; i < rows; i++) {
+    const currRow: Row = [];
+    for (let j = 0; j < cols; j++)
+      currRow.push(MINES_CONSTANTS.BOX_STATE.UNKNOWN);
+    state.push(currRow);
+  }
+  return state;
 };
 
 export const currentDate = () => {

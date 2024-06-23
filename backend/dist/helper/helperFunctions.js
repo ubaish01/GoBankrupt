@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateRandomDate = exports.formatMonth = exports.formatDateMY = exports.GenerateForgetPasswordOtpMailTemplate = exports.GenerateOtpMailTemplate = exports.getValidity = exports.currentDate = exports.isTokenValid = exports.oneMinutePassed = exports.isOtpExpired = exports.generateOTP = exports.extractJwt = void 0;
+exports.generateRandomDate = exports.formatMonth = exports.formatDateMY = exports.GenerateForgetPasswordOtpMailTemplate = exports.GenerateOtpMailTemplate = exports.getValidity = exports.currentDate = exports.CreateMineGamePublicState = exports.CreateMineGamePrivateState = exports.generateRandomNumber = exports.isTokenValid = exports.oneMinutePassed = exports.isOtpExpired = exports.generateOTP = exports.extractJwt = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const contants_1 = require("../config/contants");
+const GameConstants_1 = require("../config/GameConstants");
 const extractJwt = (cookie) => {
     let token = cookie === null || cookie === void 0 ? void 0 : cookie.split("token=");
     if (token)
@@ -55,6 +56,50 @@ const isTokenValid = (req) => {
     return decoded === null || decoded === void 0 ? void 0 : decoded._id;
 };
 exports.isTokenValid = isTokenValid;
+const generateRandomNumber = (min = 0, max = 10) => {
+    const number = Math.floor(Math.random() * (max - min + 1));
+    return number + min;
+};
+exports.generateRandomNumber = generateRandomNumber;
+const CreateMineGamePrivateState = (mines) => {
+    var _a, _b;
+    const rows = 5, cols = 5;
+    const state = [];
+    const mineIndex = [];
+    while (mineIndex.length < mines) {
+        const row = (0, exports.generateRandomNumber)(0, 5);
+        const col = (0, exports.generateRandomNumber)(0, 5);
+        const includes = (_a = mineIndex.filter((box) => box.row === row && box.col === col)) === null || _a === void 0 ? void 0 : _a.length;
+        if (!includes)
+            mineIndex.push({ row, col });
+    }
+    for (let i = 0; i < rows; i++) {
+        const currRow = [];
+        for (let j = 0; j < cols; j++) {
+            const includes = (_b = mineIndex.filter((box) => box.row === i && box.col === j)) === null || _b === void 0 ? void 0 : _b.length;
+            if (includes)
+                currRow.push(GameConstants_1.MINES_CONSTANTS.BOX_STATE.MINE);
+            else
+                currRow.push(GameConstants_1.MINES_CONSTANTS.BOX_STATE.GEM);
+        }
+        state.push(currRow);
+    }
+    return state;
+};
+exports.CreateMineGamePrivateState = CreateMineGamePrivateState;
+const CreateMineGamePublicState = () => {
+    const rows = 5;
+    const cols = 5;
+    const state = [];
+    for (let i = 0; i < rows; i++) {
+        const currRow = [];
+        for (let j = 0; j < cols; j++)
+            currRow.push(GameConstants_1.MINES_CONSTANTS.BOX_STATE.UNKNOWN);
+        state.push(currRow);
+    }
+    return state;
+};
+exports.CreateMineGamePublicState = CreateMineGamePublicState;
 const currentDate = () => {
     const months = [
         "Jan",

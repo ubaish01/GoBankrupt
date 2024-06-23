@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BET_RISK = exports.DEFAULT_BALANCE = exports.RESEND_TYPE = exports.RESPONSE_INFO = exports.LOCALHOST = exports.MONTHS = exports.STATUS = exports.TRANSACTION_STATUS = exports.TRANSACTION_TYPE = exports.AVATAR_TYPE = exports.USER_ROLE = exports.LOGIN_PLATFORM = void 0;
+exports.MINE_GAME = exports.BET_RISK = exports.DEFAULT_BALANCE = exports.RESEND_TYPE = exports.RESPONSE_INFO = exports.LOCALHOST = exports.MONTHS = exports.STATUS = exports.TRANSACTION_STATUS = exports.TRANSACTION_TYPE = exports.AVATAR_TYPE = exports.USER_ROLE = exports.LOGIN_PLATFORM = void 0;
 exports.LOGIN_PLATFORM = {
     EMAIL: 1,
     GOOGLE: 2,
@@ -67,4 +67,8 @@ exports.BET_RISK = {
     LOW: 1,
     MEDIUM: 2,
     HIGH: 3,
+};
+exports.MINE_GAME = {
+    MINE: 0,
+    GEM: 1,
 };

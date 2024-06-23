@@ -76,3 +76,8 @@ export const BET_RISK = {
   MEDIUM: 2,
   HIGH: 3,
 };
+
+export const MINE_GAME = {
+  MINE: 0,
+  GEM: 1,
+};

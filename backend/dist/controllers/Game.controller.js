@@ -8,80 +8,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Plinkoo = void 0;
+exports.StartMineGame = exports.Plinkoo = void 0;
+const GameConstants_1 = require("../config/GameConstants");
 const contants_1 = require("../config/contants");
 const outcomes_1 = require("../outcomes");
 const mongoose_1 = __importDefault(require("mongoose"));
+const error_1 = require("../error/error");
+const helperFunctions_1 = require("../helper/helperFunctions");
 const Wallet = mongoose_1.default.model("Wallet");
-const TOTAL_DROPS = 16;
-const MULTIPLIERS_LOW = {
-    0: 16,
-    1: 9,
-    2: 2,
-    3: 1.4,
-    4: 1.4,
-    5: 1.2,
-    6: 1.1,
-    7: 1,
-    8: 0.5,
-    9: 1,
-    10: 1.1,
-    11: 1.2,
-    12: 1.4,
-    13: 1.4,
-    14: 2,
-    15: 9,
-    16: 16,
-};
-const MULTIPLIERS_MEDIUM = {
-    0: 110,
-    1: 41,
-    2: 10,
-    3: 5,
-    4: 3,
-    5: 1.5,
-    6: 1,
-    7: 0.5,
-    8: 0.3,
-    9: 0.5,
-    10: 1,
-    11: 1.5,
-    12: 3,
-    13: 5,
-    14: 10,
-    15: 41,
-    16: 110,
-};
-const MULTIPLIERS_HARD = {
-    0: 1000,
-    1: 130,
-    2: 26,
-    3: 9,
-    4: 4,
-    5: 2,
-    6: 0.2,
-    7: 0.2,
-    8: 0.2,
-    9: 0.2,
-    10: 0.2,
-    11: 2,
-    12: 4,
-    13: 9,
-    14: 26,
-    15: 130,
-    16: 1000,
-};
+const MineGame = mongoose_1.default.model("MineGame");
 const Plinkoo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { bet, risk } = req.body; // bet amount is 500 dollars
         const user = req.user;
         let outcome = 0;
         const pattern = [];
-        for (let i = 0; i < TOTAL_DROPS; i++) {
+        for (let i = 0; i < GameConstants_1.PLINKO_CONSTANTS.TOTAL_DROPS; i++) {
             if (Math.random() > 0.5) {
                 pattern.push("R");
                 outcome++;
@@ -91,10 +48,10 @@ const Plinkoo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
         const multiplier = risk == contants_1.BET_RISK.LOW
-            ? MULTIPLIERS_LOW[outcome]
+            ? GameConstants_1.PLINKO_CONSTANTS.MULTIPLIERS_LOW[outcome]
             : risk == contants_1.BET_RISK.MEDIUM
-                ? MULTIPLIERS_MEDIUM[outcome]
-                : MULTIPLIERS_HARD[outcome];
+                ? GameConstants_1.PLINKO_CONSTANTS.MULTIPLIERS_MEDIUM[outcome]
+                : GameConstants_1.PLINKO_CONSTANTS.MULTIPLIERS_HARD[outcome];
         const possiblieOutcomes = outcomes_1.outcomes[outcome];
         console.log(multiplier);
         const wallet = yield Wallet.findOne({ user: user._id });
@@ -114,3 +71,52 @@ const Plinkoo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.Plinkoo = Plinkoo;
+const StartMineGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const session = yield mongoose_1.default.startSession();
+    try {
+        const user = req.user;
+        const { mines, betAmount } = req.body;
+        const wallet = yield Wallet.findOne({ user: user._id });
+        if (wallet.balance < betAmount)
+            return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, "Insufficient balance");
+        if (mines > 24 || mines < 1)
+            return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, "Mines should be 1 to 24.");
+        const gameState = (0, helperFunctions_1.CreateMineGamePublicState)();
+        const gamePrivateState = (0, helperFunctions_1.CreateMineGamePrivateState)(mines);
+        session.startTransaction();
+        // Perform your operations within the transaction
+        wallet.balance -= Math.floor(betAmount);
+        yield wallet.save({ session });
+        const mineGame = new MineGame({
+            user: user._id,
+            mines: mines,
+            gems: GameConstants_1.MINES_CONSTANTS.BOX_COUNT - mines,
+            isActive: true,
+            betAmount,
+            state: gameState,
+            privateState: gamePrivateState,
+        });
+        yield mineGame.save({ session });
+        const { privateState } = mineGame, game = __rest(mineGame, ["privateState"]);
+        // Commit the transaction
+        yield session.commitTransaction();
+        const data = {
+            success: true,
+            wallet,
+            mineGame: game,
+        };
+        return res.status(contants_1.STATUS.CREATED).json(data);
+    }
+    catch (error) {
+        yield session.abortTransaction();
+        console.error("Transaction aborted due to an error: ", error);
+        res.status(contants_1.STATUS.INTERNAL_SERVER_ERROR).json({
+            success: true,
+            message: error.message,
+        });
+    }
+    finally {
+        session.endSession();
+    }
+});
+exports.StartMineGame = StartMineGame;

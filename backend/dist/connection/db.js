@@ -8,6 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 require("../models/Transaction.model");
 require("../models/User.model");
 require("../models/Wallet.model");
+require("../models/MineGame.model");
 const ConnectDatabase = () => {
     if (mongoose_1.default.connection.readyState === 0) {
         mongoose_1.default.connect(process.env.MONGO_URI || "");

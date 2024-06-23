@@ -1,68 +1,16 @@
-import { BET_RISK } from "../config/contants";
+import { MINES_CONSTANTS, PLINKO_CONSTANTS } from "../config/GameConstants";
+import { BET_RISK, STATUS } from "../config/contants";
 import { ModifiedRequest } from "../definitionFile";
 import { outcomes } from "../outcomes";
 import { Response } from "express";
 import mongoose from "mongoose";
+import { errorHandler } from "../error/error";
+import {
+  CreateMineGamePrivateState,
+  CreateMineGamePublicState,
+} from "../helper/helperFunctions";
 const Wallet = mongoose.model("Wallet");
-const TOTAL_DROPS = 16;
-
-const MULTIPLIERS_LOW: { [key: number]: number } = {
-  0: 16,
-  1: 9,
-  2: 2,
-  3: 1.4,
-  4: 1.4,
-  5: 1.2,
-  6: 1.1,
-  7: 1,
-  8: 0.5,
-  9: 1,
-  10: 1.1,
-  11: 1.2,
-  12: 1.4,
-  13: 1.4,
-  14: 2,
-  15: 9,
-  16: 16,
-};
-const MULTIPLIERS_MEDIUM: { [key: number]: number } = {
-  0: 110,
-  1: 41,
-  2: 10,
-  3: 5,
-  4: 3,
-  5: 1.5,
-  6: 1,
-  7: 0.5,
-  8: 0.3,
-  9: 0.5,
-  10: 1,
-  11: 1.5,
-  12: 3,
-  13: 5,
-  14: 10,
-  15: 41,
-  16: 110,
-};
-const MULTIPLIERS_HARD: { [key: number]: number } = {
-  0: 1000,
-  1: 130,
-  2: 26,
-  3: 9,
-  4: 4,
-  5: 2,
-  6: 0.2,
-  7: 0.2,
-  8: 0.2,
-  9: 0.2,
-  10: 0.2,
-  11: 2,
-  12: 4,
-  13: 9,
-  14: 26,
-  15: 130,
-  16: 1000,
-};
+const MineGame = mongoose.model("MineGame");
 
 export const Plinkoo = async (req: ModifiedRequest, res: Response) => {
   try {
@@ -70,7 +18,7 @@ export const Plinkoo = async (req: ModifiedRequest, res: Response) => {
     const user = req.user;
     let outcome = 0;
     const pattern = [];
-    for (let i = 0; i < TOTAL_DROPS; i++) {
+    for (let i = 0; i < PLINKO_CONSTANTS.TOTAL_DROPS; i++) {
       if (Math.random() > 0.5) {
         pattern.push("R");
         outcome++;
@@ -81,10 +29,10 @@ export const Plinkoo = async (req: ModifiedRequest, res: Response) => {
 
     const multiplier =
       risk == BET_RISK.LOW
-        ? MULTIPLIERS_LOW[outcome]
+        ? PLINKO_CONSTANTS.MULTIPLIERS_LOW[outcome]
         : risk == BET_RISK.MEDIUM
-        ? MULTIPLIERS_MEDIUM[outcome]
-        : MULTIPLIERS_HARD[outcome];
+        ? PLINKO_CONSTANTS.MULTIPLIERS_MEDIUM[outcome]
+        : PLINKO_CONSTANTS.MULTIPLIERS_HARD[outcome];
 
     const possiblieOutcomes = outcomes[outcome];
     console.log(multiplier);
@@ -106,5 +54,78 @@ export const Plinkoo = async (req: ModifiedRequest, res: Response) => {
     });
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const StartMineGame = async (req: ModifiedRequest, res: Response) => {
+  try {
+    const user = req.user;
+    const { mines, betAmount } = req.body;
+    const wallet = await Wallet.findOne({ user: user._id });
+
+    const activeGame = await MineGame.findOne({ user: user._id });
+    const { privateState, ...other } = activeGame._doc;
+
+    if (activeGame)
+      return res.status(200).json({
+        success: true,
+        game: other,
+        wallet,
+      });
+
+    if (wallet.balance < betAmount)
+      return errorHandler(res, STATUS.BAD_REQUEST, "Insufficient balance");
+
+    if (mines > 24 || mines < 1)
+      return errorHandler(res, STATUS.BAD_REQUEST, "Mines should be 1 to 24.");
+
+    const gameState = CreateMineGamePublicState();
+    const gamePrivateState = CreateMineGamePrivateState(mines);
+
+    const session = await mongoose.startSession();
+    try {
+      session.startTransaction();
+      // Perform your operations within the transaction
+      wallet.balance -= Math.floor(betAmount);
+      await wallet.save({ session });
+
+      const mineGame = new MineGame({
+        user: user._id,
+        mines: mines,
+        gems: MINES_CONSTANTS.BOX_COUNT - mines,
+        isActive: true,
+        betAmount,
+        state: gameState,
+        privateState: gamePrivateState,
+      });
+
+      await mineGame.save({ session });
+
+      const { privateState, ...game } = mineGame;
+
+      // Commit the transaction
+      await session.commitTransaction();
+      const data = {
+        success: true,
+        wallet,
+        game,
+      };
+
+      return res.status(STATUS.CREATED).json(data);
+    } catch (error: any) {
+      await session.abortTransaction();
+      console.error("Transaction aborted due to an error: ", error);
+      res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+        success: true,
+        message: error.message,
+      });
+    } finally {
+      session.endSession();
+    }
+  } catch (error: any) {
+    res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+      success: true,
+      message: error.message,
+    });
   }
 };
