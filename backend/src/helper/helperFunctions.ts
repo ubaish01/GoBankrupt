@@ -70,8 +70,8 @@ export const CreateMineGamePrivateState = (mines: number) => {
 
   const mineIndex: { row: number; col: number }[] = [];
   while (mineIndex.length < mines) {
-    const row = generateRandomNumber(0, 5);
-    const col = generateRandomNumber(0, 5);
+    const row = generateRandomNumber(0, 4);
+    const col = generateRandomNumber(0, 4);
     const includes = mineIndex.filter(
       (box) => box.row === row && box.col === col
     )?.length;
