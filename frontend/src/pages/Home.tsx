@@ -4,6 +4,7 @@ import { WIDTH } from "../game/constants";
 import { pad } from "../game/padding";
 import { Simulate } from "../components/Simulate";
 import { Quotes, FoundIssue } from "../components";
+import MineSimulation from "../components/MineSimulation";
 
 export function Home() {
   const canvasRef = useRef<any>();
@@ -63,7 +64,11 @@ export function Home() {
   }, [canvasRef]);
 
   return (
-    <div className="">
+    <div className="pt-12">
+      <div className="flex flex-col lg:flex-row  items-center justify-between ">
+        <Quotes />
+        <MineSimulation />
+      </div>
       <div className="flex flex-col lg:flex-row  items-center justify-between ">
         <Simulate />
         <Quotes />

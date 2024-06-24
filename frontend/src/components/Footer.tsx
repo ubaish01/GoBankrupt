@@ -7,8 +7,6 @@ export const Footer = () => {
     location.pathname?.includes("/user/onboard")
   );
   return (
-    show && (
-      <footer className="border-t border-gray-600 py-12 text-white"></footer>
-    )
+    show && <footer className="border-t bg-[#0F212E] py-12 text-white"></footer>
   );
 };

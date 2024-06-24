@@ -28,7 +28,7 @@ const Select = ({
 
   return (
     <div className="w-full relative">
-      <div className="text-sm absolute top-[-1.2rem] left-0 pl-1 text-gray-400">
+      <div className="text-sm absolute top-[-1.5rem] left-0 pl-1 text-gray-400">
         {label}
       </div>
       <div
@@ -47,7 +47,7 @@ const Select = ({
       <div
         className={clsx(
           open ? "flex" : "hidden",
-          "flex-col items-start capitalize cursor-pointer  overflow-hidden rounded-b-md w-full "
+          "flex-col items-start absolute z-20 capitalize cursor-pointer  overflow-hidden overflow-y-auto no-scrollbar max-h-60 rounded-b-md w-full "
         )}
       >
         {options?.map((item: any) => (

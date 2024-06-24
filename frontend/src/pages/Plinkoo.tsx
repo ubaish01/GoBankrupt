@@ -30,8 +30,8 @@ export function Plinkoo() {
   }, [canvasRef, risk]);
 
   return (
-    <div className="flex  items-start  justify-center  w-full">
-      <div className="w-72 h-[30rem] mt-16 px-2 gap-6 flex items-center justify-start pt-12 flex-col rounded-md bg-[#262522]">
+    <div className="flex  items-start bg-[#0F212E]  justify-center  w-full pt-12">
+      <div className="w-72 h-[30rem] mt-16 px-4 gap-6 flex items-center justify-start pt-12 flex-col rounded-md bg-[#213743]">
         {/* SELECT BET RISK  */}
         <div className="w-full">
           <Select
@@ -74,7 +74,7 @@ export function Plinkoo() {
         </div>
 
         <Button
-          className="px-10 mb-4 bg-purple-500 active:scale-95 flex items-center gap-2"
+          className="px-10 mb-4 bg-purple-500 w-full justify-center active:scale-95 flex items-center gap-2"
           onClick={async () => {
             const response = await postRequest(`/game/plinkoo`, {
               bet: betAmount * 100,

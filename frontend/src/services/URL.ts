@@ -9,3 +9,10 @@ export const AUTH = {
   LOGOUT: "/auth/logout",
   GET_USER_INFO: "/auth/user",
 };
+
+export const MINES = {
+  START: "/game/mines/start",
+  CHECK_ACTIVE_GAME: "/game/mines/active-game",
+  REVEAL_BOX: "/game/mines/box/reveal",
+  CASHOUT: "/game/mines/cashout",
+};

@@ -90,3 +90,11 @@ export const BET_RISK = {
   MEDIUM: 2,
   HIGH: 3,
 };
+
+export const BOX_STATE = {
+  UNKNOWN: 0,
+  MINE: 1,
+  GEM: 2,
+};
+
+export const Max_MINES = 24;

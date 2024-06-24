@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Plinkoo } from "./pages/Plinkoo";
 import { Footer } from "./components";
@@ -11,6 +11,8 @@ import RedirectionCheck from "./components/Protected Routes/RedirectionCheck";
 import LoginOnly from "./components/Protected Routes/LoginOnly";
 import { Toaster } from "react-hot-toast";
 import { Simulation } from "./pages/Simulation";
+import Mines from "./pages/Mines";
+
 // THERE IS SOMETHING WRONG IN AUTH-> ONBOARDING . PLEASE CHECK
 
 function App() {
@@ -24,8 +26,9 @@ function App() {
         </Route>
 
         <Route element={<LoginOnly />}>
-          <Route path="/game/plinkoo" element={<Plinkoo />} />
           <Route path="/game/simulation" element={<Simulation />} />
+          <Route path="/game/plinkoo" element={<Plinkoo />} />
+          <Route path="/game/mines" element={<Mines />} />
         </Route>
 
         <Route path="/" element={<Home />} />
