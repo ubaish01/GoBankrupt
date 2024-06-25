@@ -10,7 +10,7 @@ const Auth = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-[50rem] h-[35rem] grid grid-cols-2 bg-[#262522] transition-all  overflow-hidden rounded-md ">
+      <div className="w-[50rem] h-[35rem] grid grid-cols-2 bg-[#1A2C38] transition-all  overflow-hidden rounded-md ">
         <div
           className={clsx(
             "col-span-1 h-full relative",

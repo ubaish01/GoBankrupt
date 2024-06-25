@@ -14,11 +14,51 @@ import { cookieSetter, generateToken, sendMail } from "../helper/services";
 import { ModifiedRequest } from "../definitionFile";
 const User = mongoose.model("User");
 const Wallet = mongoose.model("Wallet");
+import { z } from "zod";
+
+const SignupSchema = z.object({
+  email: z.string().email("Invalid email format."),
+  name: z.string().min(4, "Name must be at least 4 characters long."),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long.")
+    .refine(
+      (value) =>
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          value
+        ),
+      {
+        message:
+          "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character (@$!%*?&).",
+      }
+    ),
+});
+
+// Function to validate signup input
+function validateSignupInput(data: any) {
+  try {
+    // Validate input against the schema
+    const validatedData = SignupSchema.parse(data);
+    return { success: true, data: validatedData };
+  } catch (error: any) {
+    return { success: false, error: error.errors };
+  }
+}
 
 export const AuthContollers = {
   register: async (req: Request, res: Response) => {
     try {
       const { email, password, name } = req.body;
+      const validation = validateSignupInput(req.body);
+
+      if (!validation.success)
+        return errorHandler(
+          res,
+          STATUS.BAD_REQUEST,
+          ` ${validation.error?.[0]?.message}`
+        );
+
+      console.log(validation);
 
       if (!email || !password || !name)
         return errorHandler(res, STATUS.OK, "Input Data missing");
@@ -358,7 +398,9 @@ export const AuthContollers = {
   userOnboard: async (req: ModifiedRequest, res: Response) => {
     try {
       const user = await User.findById(req.user._id);
+      console.log(req.body);
       const avatar = parseInt(req.body?.avatar);
+      const balance = parseInt(req.body?.balance || "100000000");
       if (!avatar)
         return errorHandler(
           res,
@@ -367,11 +409,10 @@ export const AuthContollers = {
         );
       user.avatar = avatar;
       user.onboard = true;
-      // creating user wallet
-      const balance = 10000000;
+
       const wallet = await Wallet.create({
         user: user._id,
-        balance,
+        balance: balance * 100,
       });
 
       await user.save();

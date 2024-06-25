@@ -4,6 +4,7 @@ import { Input } from "../../components/ui/Input";
 import { AUTH_STATE } from "../../game/constants";
 import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
+import { Tooltip } from "../../components/ui/Tooltip";
 
 const SignupForm = ({ setState }: { setState: any }) => {
   const { loading, register } = useAuth(setState);
@@ -12,25 +13,46 @@ const SignupForm = ({ setState }: { setState: any }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const GoogleLogin = () => {
+    const url = import.meta.env.VITE_REACT_BACKEND_URL + "/api/v1/auth/google";
+    window.open(url, "_self");
+  };
+
   return (
     <form className="flex flex-col w-full justify-center items-center px-4 gap-2 ">
       <div className="flex items-center gap-2">
         <FaGoogle
           size={32}
           className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          onClick={GoogleLogin}
         />
-        <FaFacebook
-          size={32}
-          className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
-        />
-        <FaGithub
-          size={32}
-          className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
-        />
-        <FaDiscord
-          size={32}
-          className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
-        />
+        <Tooltip
+          orientation="top"
+          tooltipText={[`Not implemented yet.`, "Please login with google"]}
+        >
+          <FaFacebook
+            size={32}
+            className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          />
+        </Tooltip>
+        <Tooltip
+          orientation="top"
+          tooltipText={[`Not implemented yet.`, "Please login with google"]}
+        >
+          <FaGithub
+            size={32}
+            className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          />
+        </Tooltip>
+        <Tooltip
+          orientation="top"
+          tooltipText={[`Not implemented yet.`, "Please login with google"]}
+        >
+          <FaDiscord
+            size={32}
+            className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          />
+        </Tooltip>
       </div>
       <Input
         placeholder="Name"

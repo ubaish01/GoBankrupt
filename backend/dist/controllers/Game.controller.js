@@ -95,7 +95,6 @@ const StartMineGame = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, "Mines should be 1 to 24.");
         const gameState = (0, helperFunctions_1.CreateMineGamePublicState)();
         const gamePrivateState = (0, helperFunctions_1.CreateMineGamePrivateState)(mines);
-        console.log(gamePrivateState);
         const session = yield mongoose_1.default.startSession();
         try {
             session.startTransaction();

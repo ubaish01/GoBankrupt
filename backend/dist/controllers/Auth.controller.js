@@ -32,10 +32,37 @@ const helperFunctions_1 = require("../helper/helperFunctions");
 const services_1 = require("../helper/services");
 const User = mongoose_1.default.model("User");
 const Wallet = mongoose_1.default.model("Wallet");
+const zod_1 = require("zod");
+const SignupSchema = zod_1.z.object({
+    email: zod_1.z.string().email("Invalid email format."),
+    name: zod_1.z.string().min(4, "Name must be at least 4 characters long."),
+    password: zod_1.z
+        .string()
+        .min(8, "Password must be at least 8 characters long.")
+        .refine((value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value), {
+        message: "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character (@$!%*?&).",
+    }),
+});
+// Function to validate signup input
+function validateSignupInput(data) {
+    try {
+        // Validate input against the schema
+        const validatedData = SignupSchema.parse(data);
+        return { success: true, data: validatedData };
+    }
+    catch (error) {
+        return { success: false, error: error.errors };
+    }
+}
 exports.AuthContollers = {
     register: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b;
         try {
             const { email, password, name } = req.body;
+            const validation = validateSignupInput(req.body);
+            if (!validation.success)
+                return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, ` ${(_b = (_a = validation.error) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.message}`);
+            console.log(validation);
             if (!email || !password || !name)
                 return (0, error_1.errorHandler)(res, contants_1.STATUS.OK, "Input Data missing");
             const userFound = yield User.findOne({
@@ -57,7 +84,7 @@ exports.AuthContollers = {
                 last_otp_sent: Date.now(),
                 otp_sent_count: 1,
             });
-            const _a = user._doc, { password: pwd } = _a, rest = __rest(_a, ["password"]);
+            const _c = user._doc, { password: pwd } = _c, rest = __rest(_c, ["password"]);
             // generating access token for authentication
             yield user.save();
             // sending verification mail
@@ -84,7 +111,7 @@ exports.AuthContollers = {
             const passwordMatch = yield bcrypt_1.default.compare(password, foundUser.password);
             if (!passwordMatch)
                 return (0, error_1.errorHandler)(res, 401, "Invalid email or password!");
-            const _b = foundUser._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _b, rest = __rest(_b, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
+            const _d = foundUser._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _d, rest = __rest(_d, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
             const access_token = (0, services_1.generateToken)(foundUser._id);
             (0, services_1.cookieSetter)(res, access_token, true);
             const wallet = yield Wallet.findOne({ user: foundUser._id });
@@ -122,7 +149,7 @@ exports.AuthContollers = {
             user.last_activity = Date.now();
             user.email_verified = true;
             yield user.save();
-            const _c = user._doc, { password, otp: otpp, otp_sent_count, last_otp_sent, last_login, last_activity } = _c, rest = __rest(_c, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
+            const _e = user._doc, { password, otp: otpp, otp_sent_count, last_otp_sent, last_login, last_activity } = _e, rest = __rest(_e, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
             const access_token = (0, services_1.generateToken)(user._id);
             (0, services_1.cookieSetter)(res, access_token, true);
             return res.status(200).json({
@@ -227,7 +254,7 @@ exports.AuthContollers = {
             user.last_activity = Date.now();
             user.password = hashdPassword;
             yield user.save();
-            const _d = user._doc, { password: pwd, api_calls, otp: otpp, otp_sent_count, last_otp_sent, last_login } = _d, rest = __rest(_d, ["password", "api_calls", "otp", "otp_sent_count", "last_otp_sent", "last_login"]);
+            const _f = user._doc, { password: pwd, api_calls, otp: otpp, otp_sent_count, last_otp_sent, last_login } = _f, rest = __rest(_f, ["password", "api_calls", "otp", "otp_sent_count", "last_otp_sent", "last_login"]);
             const access_token = (0, services_1.generateToken)(user._id);
             (0, services_1.cookieSetter)(res, access_token, true);
             return res.status(200).json({
@@ -268,7 +295,7 @@ exports.AuthContollers = {
                 foundUser.last_activity = Date.now();
                 yield foundUser.save();
                 const wallet = yield Wallet.findOne({ user: foundUser._id });
-                const _e = foundUser._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _e, rest = __rest(_e, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
+                const _g = foundUser._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _g, rest = __rest(_g, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
                 const access_token = (0, services_1.generateToken)(foundUser._id);
                 (0, services_1.cookieSetter)(res, access_token, true);
                 return res.status(200).json({
@@ -288,22 +315,22 @@ exports.AuthContollers = {
         }
     }),
     userOnboard: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        var _f;
+        var _h, _j;
         try {
             const user = yield User.findById(req.user._id);
-            const avatar = parseInt((_f = req.body) === null || _f === void 0 ? void 0 : _f.avatar);
+            console.log(req.body);
+            const avatar = parseInt((_h = req.body) === null || _h === void 0 ? void 0 : _h.avatar);
+            const balance = parseInt(((_j = req.body) === null || _j === void 0 ? void 0 : _j.balance) || "100000000");
             if (!avatar)
                 return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, "Selecting avatar is mandatory");
             user.avatar = avatar;
             user.onboard = true;
-            // creating user wallet
-            const balance = 10000000;
             const wallet = yield Wallet.create({
                 user: user._id,
-                balance,
+                balance: balance * 100,
             });
             yield user.save();
-            const _g = user._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _g, rest = __rest(_g, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
+            const _k = user._doc, { password: pwd, otp, otp_sent_count, last_otp_sent, last_login, last_activity } = _k, rest = __rest(_k, ["password", "otp", "otp_sent_count", "last_otp_sent", "last_login", "last_activity"]);
             return res.json({ success: true, user: Object.assign({}, rest), wallet });
         }
         catch (error) {

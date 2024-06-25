@@ -147,7 +147,7 @@ const Mines = () => {
   }, []);
 
   return (
-    <div className="flex  items-start pt-12  justify-center bg-[#0F212E]  w-full">
+    <div className="flex  items-start pt-12  justify-center bg-[#0F212E]  w-full min-h-screen">
       <div className="w-72 h-[30rem] mt-16 px-4 gap-6 flex items-center justify-start pt-12 flex-col rounded-md bg-[#213743]">
         {/* BET AMOUNT  */}
         <div className="w-full relative">

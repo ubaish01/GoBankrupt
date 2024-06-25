@@ -27,6 +27,10 @@ export const useAuth = (setState: any) => {
   ) => {
     try {
       e.preventDefault();
+      if (data.password != data.confirmPassword) {
+        toast.error("Password does not match");
+        return;
+      }
       setLoading(true);
       const res = await postRequest(AUTH.REGISTER, data);
       console.log(res);

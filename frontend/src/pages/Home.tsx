@@ -64,14 +64,22 @@ export function Home() {
   }, [canvasRef]);
 
   return (
-    <div className="pt-12">
+    <div className="pt-16">
       <div className="flex flex-col lg:flex-row  items-center justify-between ">
-        <Quotes />
+        <Quotes
+          heading="Mines : The Game Where Your Luck Goes to Take a Nap!"
+          description={` Welcome to Mines, where your money is as safe as a snowman in a sauna! Think you can outsmart the mines and walk away with imaginary riches? Think again! This game is perfect for those who love the thrill of losing it all without the pesky reality of actual bankruptcy. Step right up, test your (questionable) luck, and see if you can turn your pretend fortune into a spectacular disaster. Warning: side effects may include uncontrollable laughter, mock crying, and a sudden urge to rethink your life choices. Dive in and explode with fun!`}
+          action={{ text: "Play Mines", path: "/game/mines" }}
+        />
         <MineSimulation />
       </div>
       <div className="flex flex-col lg:flex-row  items-center justify-between ">
         <Simulate />
-        <Quotes />
+        <Quotes
+          action={{ text: "Play Pinkoo", path: "/game/plinkoo" }}
+          heading="Plinko: Where Your  Money Learns to Fly... Away!"
+          description={`Welcome to Plinko, where your imaginary wealth goes on a thrilling adventure towards bankruptcy! Drop a chip and marvel as it navigates a labyrinth of pegs with the grace of a drunken squirrel. Will you hit the jackpot? Sure, if the jackpot is the furthest point from financial success! It’s the perfect game for those who enjoy the thrill of watching their pretend riches take a scenic route to oblivion. Ready to witness the breathtaking spectacle of your fake fortune making a daring escape? Let’s Plinko and see how fast you can turn pretend money into pure amusement!`}
+        />
       </div>
       <FoundIssue />
     </div>

@@ -4,6 +4,7 @@ import { FaDiscord, FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { AUTH_STATE } from "../../game/constants";
 import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
+import { Tooltip } from "../../components/ui/Tooltip";
 
 const LoginForm = ({ setState }: { setState: any }) => {
   const { loading, login } = useAuth(setState);
@@ -25,18 +26,33 @@ const LoginForm = ({ setState }: { setState: any }) => {
           className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
           onClick={GoogleLogin}
         />
-        <FaFacebook
-          size={32}
-          className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
-        />
-        <FaGithub
-          size={32}
-          className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
-        />
-        <FaDiscord
-          size={32}
-          className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
-        />
+        <Tooltip
+          orientation="top"
+          tooltipText={[`Not implemented yet.`, "Please login with google"]}
+        >
+          <FaFacebook
+            size={32}
+            className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          />
+        </Tooltip>
+        <Tooltip
+          orientation="top"
+          tooltipText={[`Not implemented yet.`, "Please login with google"]}
+        >
+          <FaGithub
+            size={32}
+            className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          />
+        </Tooltip>
+        <Tooltip
+          orientation="top"
+          tooltipText={[`Not implemented yet.`, "Please login with google"]}
+        >
+          <FaDiscord
+            size={32}
+            className="cursor-pointer bg-black p-1 rounded-full  aspect-square"
+          />
+        </Tooltip>
       </div>
       <Input
         placeholder="Email"

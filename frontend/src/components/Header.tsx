@@ -12,7 +12,7 @@ import {
   wallet as setWallet,
 } from "../redux/user/userSlice";
 import clsx from "clsx";
-import { Balance } from "../helper";
+import { formatBalance } from "../helper";
 import toast from "react-hot-toast";
 
 const Header = () => {
@@ -87,8 +87,8 @@ const Header = () => {
           </div>
         </div>
         <div className="items-center  flex rounded-md overflow-hidden">
-          <div className="bg-black w-40 px-8 py-3">
-            $ {Balance(wallet?.balance)}
+          <div className="bg-black w-48 px-8 py-3">
+            $ {formatBalance(wallet?.balance)}
           </div>
           <div className="bg-purple-700 w-24 text-center font-bold px-4 py-3 cursor-pointer">
             Wallet

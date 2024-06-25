@@ -6,21 +6,35 @@ import { postRequest } from "../../services/Request";
 import { AUTH } from "../../services/URL";
 import { useDispatch } from "react-redux";
 import { user, wallet } from "../../redux/user/userSlice";
+import { formatNumber } from "../../helper";
+import toast from "react-hot-toast";
 
 const Onboarding = () => {
   const [avatar, setAvatar] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [billionaireWorth, setBillionaireWorth] = useState<{
+    name: string;
+    _id: number;
+    worth: number;
+  }>(billionaires[0]);
   const dispatch = useDispatch();
   const TriggerOnboard = async () => {
     try {
       setLoading(true);
-      const res = await postRequest(AUTH.ONBOARDING, { avatar });
-      dispatch(user(res?.data?.user));
-      dispatch(wallet(res?.data?.wallet));
-      console.log(res.data);
+      const res = await postRequest(AUTH.ONBOARDING, {
+        avatar,
+        balance: billionaireWorth,
+      });
+      if (res?.data?.success) {
+        dispatch(user(res?.data?.user));
+        dispatch(wallet(res?.data?.wallet));
+      } else {
+        toast.error(res?.data?.message);
+      }
       setLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      toast.error(error?.message);
       console.error(error);
     }
   };
@@ -32,7 +46,7 @@ const Onboarding = () => {
           Welcome, <span className="font-bold text-purple-700">Ubaish</span>
         </h1>
         <div>Select a billionaire to play with his money</div>
-        <BillionairesList />
+        <BillionairesList setValue={setBillionaireWorth} />
         <SelectAvatar avatar={avatar} setAvatar={setAvatar} />
         <Button
           loading={loading}
@@ -47,13 +61,18 @@ const Onboarding = () => {
   );
 };
 
-const BillionairesList = () => {
+const BillionairesList = ({ setValue }: { setValue: any }) => {
   return (
     <div className="relative h-10 w-full min-w-[200px]">
-      <select className="peer h-full capitalize w-full rounded-[7px] border bg-transparent text-white  border-t-transparent  px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200   focus:border-2  focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+      <select
+        onClick={(e: any) => {
+          setValue(e.target.value);
+        }}
+        className="peer h-full capitalize w-full rounded-[7px] border bg-transparent text-white  border-t-transparent  px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200   focus:border-2  focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+      >
         {billionaires?.map((b) => (
-          <option key={b._id} className="text-black  " value={b._id}>
-            {b.name}
+          <option key={b._id} className="text-black  " value={b.worth}>
+            {`${b.name} (${formatNumber(b.worth)})`}
           </option>
         ))}
       </select>

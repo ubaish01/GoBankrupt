@@ -1,6 +1,6 @@
 export const FoundIssue = () => {
   return (
-    <div className="mb-24 lg:mb-32 mt-16 lg:mt-0 bg-[#262522] w-[96%] max-w-screen-lg mx-auto px-14 py-14 rounded-[36px]">
+    <div className="mb-24 lg:mb-32 mt-16 lg:mt-0 bg-[#2F4553] w-[96%] max-w-screen-lg mx-auto px-14 py-14 rounded-[36px]">
       <div className="lg:grid grid-cols-[45%,1fr] gap-28">
         <div className="rounded-xl">
           <img
@@ -18,7 +18,7 @@ export const FoundIssue = () => {
           </p>
 
           <a
-            href="https://github.com/code100x/plinkoo/issues"
+            href="https://github.com/ubaish01/GoBankrupt/issues"
             target="_blank"
             className="mt-10 text-white rounded-2xl px-4 py-4 border border-slate-400 bg-transparent w-full text-2xl flex gap-10 items-center justify-center"
           >

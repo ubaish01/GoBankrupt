@@ -50,38 +50,56 @@ export const AVATAR: StringMap = {
   12: "https://img.freepik.com/free-photo/3d-rendering-man-portrait_23-2150964650.jpg?size=626&ext=jpg&ga=GA1.1.1028521158.1718732320&semt=ais_user",
 };
 
-export const billionaires: { name: string; _id: number }[] = [
+export const billionaires: { name: string; _id: number; worth: number }[] = [
   {
     name: "Elon musk",
     _id: 1,
+    worth: 215 * 1000 * 1000 * 1000,
+  },
+  {
+    name: "Jeff Bezos",
+    _id: 2,
+    worth: 204 * 1000 * 1000 * 1000,
+  },
+  {
+    name: "	Bernard Arnault ",
+    _id: 3,
+    worth: 201 * 1000 * 1000 * 1000,
   },
   {
     name: "Mark zuckerberg",
-    _id: 2,
-  },
-  {
-    name: "Talha anjum",
-    _id: 3,
-  },
-  {
-    name: "Harkirat singh",
     _id: 4,
+    worth: 176 * 1000 * 1000 * 1000,
   },
   {
-    name: "Samay raina",
+    name: "	Larry Ellison",
     _id: 5,
+    worth: 170 * 1000 * 1000 * 1000,
   },
   {
-    name: "Warrent buffet",
+    name: "	Larry Page",
     _id: 6,
+    worth: 151 * 1000 * 1000 * 1000,
   },
   {
-    name: "Sundar pichai",
+    name: "Sergey Brin",
     _id: 7,
+    worth: 144 * 1000 * 1000 * 1000,
   },
   {
-    name: "Mukesh Ambani",
+    name: "Warren Buffett",
     _id: 8,
+    worth: 135 * 1000 * 1000 * 1000,
+  },
+  {
+    name: "Bill Gates",
+    _id: 9,
+    worth: 133 * 1000 * 1000 * 1000,
+  },
+  {
+    name: "Steve Ballmer",
+    _id: 10,
+    worth: 131 * 1000 * 1000 * 1000,
   },
 ];
 
