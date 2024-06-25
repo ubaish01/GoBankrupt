@@ -218,3 +218,4 @@ exports.MineGameController = {
     Cashout,
     GetActiveGame,
 };
+//# sourceMappingURL=Game.controller.js.map

@@ -43,3 +43,4 @@ const Schema = new mongoose_1.default.Schema({
     },
 }, { timestamps: true });
 mongoose_1.default.model("MineGame", Schema);
+//# sourceMappingURL=MineGame.model.js.map

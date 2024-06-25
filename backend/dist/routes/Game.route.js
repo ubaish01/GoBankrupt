@@ -19,3 +19,4 @@ router.get("/mines/active-game",
 //@ts-ignore
 auth_middlewate_1.isAuthenticated, Game_controller_1.MineGameController.GetActiveGame);
 exports.default = router;
+//# sourceMappingURL=Game.route.js.map

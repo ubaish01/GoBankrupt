@@ -72,3 +72,4 @@ exports.MINE_GAME = {
     MINE: 0,
     GEM: 1,
 };
+//# sourceMappingURL=contants.js.map

@@ -7,3 +7,4 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 router.get("/user", (req, res) => { });
 const User_Contollers = {};
+//# sourceMappingURL=User.controller.js.map

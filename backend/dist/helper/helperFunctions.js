@@ -412,3 +412,4 @@ const generateRandomDate = (startDate, endDate) => {
     return randomDate;
 };
 exports.generateRandomDate = generateRandomDate;
+//# sourceMappingURL=helperFunctions.js.map
