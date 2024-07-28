@@ -400,7 +400,7 @@ export const AuthContollers = {
       const user = await User.findById(req.user._id);
       console.log(req.body);
       const avatar = parseInt(req.body?.avatar);
-      const balance = parseInt(req.body?.balance || "100000000");
+      const balance = parseInt(req.body?.balance?.worth || "100000000");
       if (!avatar)
         return errorHandler(
           res,

@@ -19,7 +19,7 @@ export const Quotes = ({
       <h1 className="text-6xl font-bold">{heading}</h1>
       <h3 className="mt-4 text-xl mb-4">{description}</h3>
       <Button
-        className="bg-purple-500 hover:bg-purple-600"
+        className="bg-purple-500 w-80 hover:bg-purple-600"
         onClick={() => navigate(action.path)}
       >
         {action.text}
