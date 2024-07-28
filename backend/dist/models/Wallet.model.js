@@ -15,3 +15,4 @@ const WalletSchema = new mongoose_1.default.Schema({
     }
 }, { timestamps: true });
 mongoose_1.default.model("Wallet", WalletSchema);
+//# sourceMappingURL=Wallet.model.js.map

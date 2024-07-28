@@ -24,3 +24,4 @@ const TransactionSchema = new mongoose_1.default.Schema({
     },
 }, { timestamps: true });
 mongoose_1.default.model("Transaction", TransactionSchema);
+//# sourceMappingURL=Transaction.model.js.map

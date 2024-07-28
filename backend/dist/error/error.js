@@ -18,3 +18,4 @@ const asyncError = (passedFunc) => (req, res) => {
     });
 };
 exports.asyncError = asyncError;
+//# sourceMappingURL=error.js.map

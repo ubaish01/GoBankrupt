@@ -87,7 +87,7 @@ const Header = () => {
           </div>
         </div>
         <div className="items-center  flex rounded-md overflow-hidden">
-          <div className="bg-black w-48 px-8 py-3">
+          <div className="bg-black w-60 px-8 py-3">
             $ {formatBalance(wallet?.balance)}
           </div>
           <div className="bg-purple-700 w-24 text-center font-bold px-4 py-3 cursor-pointer">

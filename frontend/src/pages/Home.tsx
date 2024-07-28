@@ -64,7 +64,7 @@ export function Home() {
   }, [canvasRef]);
 
   return (
-    <div className="pt-16">
+    <div className="pt-32 px-32 ">
       <div className="flex flex-col lg:flex-row  items-center justify-between ">
         <Quotes
           heading="Mines : The Game Where Your Luck Goes to Take a Nap!"

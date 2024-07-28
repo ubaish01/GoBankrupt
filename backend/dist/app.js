@@ -41,3 +41,4 @@ app.get("/", (req, res) => {
     });
 });
 exports.default = app;
+//# sourceMappingURL=app.js.map
