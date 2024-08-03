@@ -1,8 +1,11 @@
 import axios from "axios";
 
+const BACKEND_URL = "https://go-bankrupt.ubaishmalik.in";
+
 const AxiosInstance = axios.create({
   timeout: 5 * 60 * 1000, // 5 minutes
-  baseURL: `${import.meta.env.VITE_REACT_BACKEND_URL}/api/v1`,
+  baseURL: `${BACKEND_URL}/api/v1`,
+  // baseURL: `${import.meta.env.VITE_REACT_BACKEND_URL}/api/v1`,
   withCredentials: true,
 });
 

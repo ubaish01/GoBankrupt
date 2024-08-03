@@ -11,12 +11,15 @@ const bcrypt = require("bcrypt");
 const Wallet = mongoose.model("Wallet");
 const saltRounds = 10;
 
+export const BACKEND_URL = "https://go-bankrupt-api.ubaishmalik.in";
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.BACKEND_URL}/api/v1/auth/google/callback`,
+      callbackURL: `${BACKEND_URL}/api/v1/auth/google/callback`,
+      // callbackURL: `${process.env.BACKEND_URL}/api/v1/auth/google/callback`,
       scope: ["profile", "email"],
     },
     async (
