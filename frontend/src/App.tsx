@@ -18,7 +18,7 @@ import Mines from "./pages/Mines";
 function App() {
   return (
     <>
-      <div className="md:grid hidden">
+      <div className="md:flex flex-col hidden">
         <BrowserRouter>
           <Header />
           <RedirectionCheck />
