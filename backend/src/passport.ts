@@ -11,7 +11,7 @@ const bcrypt = require("bcrypt");
 const Wallet = mongoose.model("Wallet");
 const saltRounds = 10;
 
-export const BACKEND_URL = "https://go-bankrupt-api.ubaishmalik.in";
+export const BACKEND_URL = "https://api.go-bankrupt.ubaishmalik.in";
 
 passport.use(
   new GoogleStrategy(
