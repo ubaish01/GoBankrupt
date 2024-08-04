@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = require("./connection/db");
-const contants_1 = require("./config/contants");
 const express_1 = __importDefault(require("express"));
 const express_session_1 = __importDefault(require("express-session"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
@@ -28,10 +27,7 @@ app.use((0, express_session_1.default)({
 }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
-app.use((0, cors_1.default)({
-    origin: [process.env.CLIENT_URL || contants_1.LOCALHOST, contants_1.LOCALHOST],
-    credentials: true,
-}));
+app.use((0, cors_1.default)());
 app.use("/api/v1/auth", Auth_route_1.default);
 app.use("/api/v1/game", Game_route_1.default);
 app.get("/", (req, res) => {
