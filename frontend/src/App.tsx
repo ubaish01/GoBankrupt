@@ -48,6 +48,7 @@ function App() {
           yet for mobile or small screen devices(we're working on its
           responsiveness). Please use a large screen device to use the app.
         </div>
+        <div className="text-xl">Thanks for visiting.</div>
       </div>
     </>
   );
