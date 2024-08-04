@@ -18,7 +18,7 @@ import Mines from "./pages/Mines";
 function App() {
   return (
     <>
-      <div className="md:flex hidden">
+      <div className="md:grid hidden">
         <BrowserRouter>
           <Header />
           <RedirectionCheck />
@@ -45,8 +45,8 @@ function App() {
         <div>Note : Please use this in computer.</div>
         <div className="text-base font-medium">
           Sorry for the inconvenience you are facing but we're not responsive
-          yet for mobile or small screen devices(we're working on its
-          responsiveness). Please use a large screen device to use the app.
+          yet for mobile or small screen devices. Please use a large screen
+          device to use the app.
         </div>
         <div className="text-xl">Thanks for visiting.</div>
       </div>
