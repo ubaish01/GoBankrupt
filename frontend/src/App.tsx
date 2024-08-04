@@ -17,27 +17,39 @@ import Mines from "./pages/Mines";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <RedirectionCheck />
-      <Routes>
-        <Route element={<NotLoginUserOnly />}>
-          <Route path="/auth" element={<Auth />} />
-        </Route>
+    <>
+      <div className="md:flex hidden">
+        <BrowserRouter>
+          <Header />
+          <RedirectionCheck />
+          <Routes>
+            <Route element={<NotLoginUserOnly />}>
+              <Route path="/auth" element={<Auth />} />
+            </Route>
 
-        <Route element={<LoginOnly />}>
-          <Route path="/game/simulation" element={<Simulation />} />
-          <Route path="/game/plinkoo" element={<Plinkoo />} />
-          <Route path="/game/mines" element={<Mines />} />
-        </Route>
+            <Route element={<LoginOnly />}>
+              <Route path="/game/simulation" element={<Simulation />} />
+              <Route path="/game/plinkoo" element={<Plinkoo />} />
+              <Route path="/game/mines" element={<Mines />} />
+            </Route>
 
-        <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />} />
 
-        <Route path="/user/onboard" element={<Onboarding />} />
-      </Routes>
-      <Footer />
-      <Toaster position="top-center" />
-    </BrowserRouter>
+            <Route path="/user/onboard" element={<Onboarding />} />
+          </Routes>
+          <Footer />
+          <Toaster position="top-center" />
+        </BrowserRouter>
+      </div>
+      <div className="flex md:hidden flex-col font-bold  items-center justify-center text-2xl px-2 h-screen w-screen text-center">
+        <div>Note : Please use this in computer.</div>
+        <div className="text-base font-medium">
+          Sorry for the inconvenience you are facing but we're not responsive
+          yet for mobile or small screen devices(we're working on its
+          responsiveness). Please use a large screen device to use the app.
+        </div>
+      </div>
+    </>
   );
 }
 
