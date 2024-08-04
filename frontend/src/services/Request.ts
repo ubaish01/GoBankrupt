@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = "https://go-bankrupt.ubaishmalik.in";
+const BACKEND_URL = "https://go-bankrupt-api.ubaishmalik.in";
 
 const AxiosInstance = axios.create({
   timeout: 5 * 60 * 1000, // 5 minutes

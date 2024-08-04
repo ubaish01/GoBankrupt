@@ -30,8 +30,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(
   cors({
-    origin: "*",
-    credentials: true,
+    origin: [
+      "https://go-bankrupt-git-main-ubaish01s-projects.vercel.app",
+      "https://go-bankrupt.ubaishmalik.in",
+    ],
   })
 );
 
