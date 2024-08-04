@@ -162,7 +162,7 @@ const RevealBox = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         yield game.save();
         yield MineGame.findByIdAndUpdate(game._id, { $set: { state: game.state } });
-        const _c = game._doc, { privateState } = _c, other = __rest(_c, ["privateState"]);
+        const _a = game._doc, { privateState } = _a, other = __rest(_a, ["privateState"]);
         return res.json({
             success: true,
             game: isMine ? game : other,
@@ -201,7 +201,7 @@ const GetActiveGame = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const wallet = yield Wallet.findOne({ user: user._id });
         if (!game)
             return (0, error_1.errorHandler)(res, contants_1.STATUS.BAD_REQUEST, "Game not found!");
-        const _d = game._doc, { privateState } = _d, other = __rest(_d, ["privateState"]);
+        const _a = game._doc, { privateState } = _a, other = __rest(_a, ["privateState"]);
         return res.json({
             game: other,
             wallet,
