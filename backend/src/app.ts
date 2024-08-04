@@ -28,11 +28,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(cors());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/game", gameRouter);
