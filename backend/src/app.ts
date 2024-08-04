@@ -28,8 +28,12 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
-app.options("*", cors());
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL || LOCALHOST, LOCALHOST],
+    credentials: true,
+  })
+);
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/game", gameRouter);
