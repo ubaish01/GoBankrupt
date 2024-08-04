@@ -23,6 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BACKEND_URL = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const passport_1 = __importDefault(require("passport"));
 const contants_1 = require("./config/contants");
@@ -31,10 +32,12 @@ const User = mongoose_1.default.model("User");
 const bcrypt = require("bcrypt");
 const Wallet = mongoose_1.default.model("Wallet");
 const saltRounds = 10;
+exports.BACKEND_URL = "https://api.go-bankrupt.ubaishmalik.in";
 passport_1.default.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.BACKEND_URL}/api/v1/auth/google/callback`,
+    callbackURL: `${exports.BACKEND_URL}/api/v1/auth/google/callback`,
+    // callbackURL: `${process.env.BACKEND_URL}/api/v1/auth/google/callback`,
     scope: ["profile", "email"],
 }, (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
