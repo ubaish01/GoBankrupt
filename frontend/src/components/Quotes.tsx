@@ -15,7 +15,7 @@ export const Quotes = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex mx-16 flex-col justify-center pb-10 ">
+    <div className="flex  w-full flex-col justify-center items-center  pb-10">
       <h1 className="text-6xl font-bold">{heading}</h1>
       <h3 className="mt-4 text-xl mb-4">{description}</h3>
       <Button

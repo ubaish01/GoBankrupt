@@ -76,7 +76,7 @@ const Header = () => {
   );
   return (
     show && (
-      <div className="bg-[#1A2C38] fixed z-50 w-full h-16 flex items-center justify-between px-40 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+      <div className="bg-[#1A2C38] fixed z-50 w-full h-16 flex items-center justify-between xl:px-40 lg:px-20 md:px-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
         <div
           className="items-center cursor-pointer gap-2 flex"
           onClick={() => navigate("/")}

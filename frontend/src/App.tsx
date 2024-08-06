@@ -41,7 +41,7 @@ function App() {
           <Toaster position="top-center" />
         </BrowserRouter>
       </div>
-      <div className="flex md:hidden flex-col font-bold  items-center justify-center text-2xl px-2 h-screen w-screen text-center">
+      <div className="flex md:hidden flex-col font-bold  items-center justify-center text-2xl px-8 h-screen w-screen text-center">
         <div>Note : Please use this in computer.</div>
         <div className="text-base font-medium">
           Sorry for the inconvenience you are facing but we're not responsive

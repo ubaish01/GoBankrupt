@@ -30,7 +30,7 @@ export function Plinkoo() {
   }, [canvasRef, risk]);
 
   return (
-    <div className="flex  items-start bg-[#0F212E]  justify-center  w-full pt-12">
+    <div className="flex  items-start bg-[#0F212E] h-screen  justify-center  w-full pt-12">
       <div className="w-72 h-[30rem] mt-16 px-4 gap-6 flex items-center justify-start pt-12 flex-col rounded-md bg-[#213743]">
         {/* SELECT BET RISK  */}
         <div className="w-full">
